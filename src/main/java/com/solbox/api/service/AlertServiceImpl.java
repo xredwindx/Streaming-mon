@@ -163,6 +163,9 @@ public class AlertServiceImpl implements AlertService {
         }
     }
 
+    /**
+     * google api short url
+     */
     public String getShortUrl(Map<String, Object> param, Map<String, Object> telegramInfo) {
         RestTemplate rest = new RestTemplate();
         String token = this.getJWTToken(param, telegramInfo);
@@ -178,6 +181,9 @@ public class AlertServiceImpl implements AlertService {
         return shortUrl;
     }
 
+    /**
+     * java jwt
+     */
     public String getJWTToken(Map<String, Object> param, Map<String, Object> telegramInfo) {
         String token = "";
 
