@@ -1,0 +1,47 @@
+<div class="modal-header">
+    <h3>계정 생성</h3>
+</div>
+<div class="modal-body">
+    <form>
+        <div class="form-group">
+            <label>ID</label>
+            <button class="btn btn-default btn-xs pull-right" ng-click="checkUserId()">중복확인</button>
+            <input type="text" class="form-control" ng-model="user.id" autofocus>
+            <h4><span class="label label-info">아이디는 최소 4자리로 해야 합니다</span></h4>
+            <div ng-class="idAlertClass" role="alert" ng-bind="idAlertMsg" ng-show="idAlert"></div>
+        </div>
+        <div class="form-group">
+            <label>비밀번호</label>
+            <input type="password" class="form-control" ng-model="user.pwd">
+            <h4><span class="label label-info">비밀번호는 최소 8자리,영문자,숫자 조합으로 해야 합니다</span></h4>
+            <div class="alert alert-warning" role="alert" ng-bind="pwdAlertMsg" ng-show="pwdAlert"></div>
+        </div>
+        <div class="form-group">
+            <label>비밀번호 확인</label>
+            <input type="password" class="form-control" ng-model="user.pwdConfirm" ng-keypress="enterEvent($event)">
+            <div class="alert alert-warning" role="alert" ng-bind="cPwdAlertMsg" ng-show="cPwdAlert"></div>
+        </div>
+        <div class="form-group">
+            <label>텔코사</label>
+            <select class="form-control" ng-model="user.telcoGubun">
+                <option value="All">All</option>
+                <option value="KT">KT</option>
+                <option value="LG">LG</option>
+                <option value="SK">SK</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>권한</label>
+            <select class="form-control" ng-model="user.level">
+                <option value="A">A</option>
+                <option value="S">S</option>
+            </select>
+            <h4><span class="label label-info">S:admin권한 A:일반사용자권한</span></h4>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <div ng-class="alertClass" role="alert" ng-bind="alertMsg" ng-show="defaultAlert"></div>
+    <button class="btn btn-primary" ng-click="addUser()">생성</button>
+    <button class="btn btn-warning" ng-click="cancel()">취소</button>
+</div>

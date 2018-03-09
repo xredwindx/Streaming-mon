@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.solbox.api.dao.AlertDao">
+    <select id="getTelegram" resultType="hashMap">
+        SELECT *
+        FROM t_stream_telegram
+        WHERE deleted_yn = 'N'
+        AND service = #{service}
+    </select>
+
+    <select id="getStreamingAlert" resultType="hashMap">
+        SELECT *
+        FROM t_stream_alert
+        WHERE deleted_yn='N'
+        AND service = #{service}
+    </select>
+
+    <select id="getAlertList" resultType="hashMap">
+        SELECT z.*
+        FROM (
+        SELECT (@RN := @RN+1) AS rn, sa.*
+        FROM t_stream_alert AS sa, (SELECT @RN := 0) AS X
+        WHERE sa.deleted_yn='N'
+        <if test="searchText != ''">
+            AND sa.service LIKE CONCAT('%',#{searchText},'%')
+        </if>
+        ORDER BY sa.upd_datetime DESC
+        ) z
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <select id="alertTotalCount" resultType="int">
+        SELECT count(*)
+        FROM t_stream_alert
+        WHERE deleted_yn = 'N'
+        <if test="searchText != ''">
+            AND service LIKE CONCAT('%',#{searchText},'%')
+        </if>
+    </select>
+
+    <select id="getTelegramList" resultType="hashMap">
+        SELECT z.*
+        FROM (
+        SELECT (@RN := @RN+1) AS rn, st.*
+        FROM t_stream_telegram AS st, (SELECT @RN := 0) AS X
+        WHERE st.deleted_yn='N'
+        <if test="searchText != ''">
+            AND st.service LIKE CONCAT('%',#{searchText},'%')
+        </if>
+        ORDER BY st.upd_datetime DESC
+        ) z
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <select id="telegramTotalCount" resultType="int">
+        SELECT count(*)
+        FROM t_stream_telegram
+        WHERE deleted_yn = 'N'
+        <if test="searchText != ''">
+            AND service LIKE CONCAT('%',#{searchText},'%')
+        </if>
+    </select>
+
+    <insert id="addAlert" parameterType="hashMap">
+        INSERT INTO t_stream_alert (telco_gubun, service, sms_url, sms_url_id, sms_url_pwd, sms_phone, sms_callback,
+         mail_url, mail_url_id, mail_url_pwd, mail_to, mail_from, alert_start, alert_interval, reg_user_id, upd_user_id)
+         VALUES (#{telco}, #{service}, #{smsUrl}, #{smsUrlId}, #{smsUrlPwd}, #{smsPhone}, #{smsCallback}, #{mailUrl},
+         #{mailUrlId}, #{mailUrlPwd}, #{mailTo}, #{mailFrom}, #{alertStart}, #{alertInterval}, #{regUser}, #{regUser})
+    </insert>
+
+    <update id="delAlert" parameterType="hashMap">
+        UPDATE t_stream_alert SET
+          deleted_yn = 'Y'
+        WHERE deleted_yn = 'N'
+          AND service = #{service}
+    </update>
+
+    <update id="editAlert" parameterType="hashMap">
+        UPDATE t_stream_alert SET
+          telco_gubun = #{telco},
+          sms_url = #{smsUrl},
+          sms_url_id = #{smsUrlId},
+          sms_url_pwd = #{smsUrlPwd},
+          sms_phone = #{smsPhone},
+          sms_callback = #{smsCallback},
+          mail_url = #{mailUrl},
+          mail_url_id = #{mailUrlId},
+          mail_url_pwd = #{mailUrlPwd},
+          mail_to = #{mailTo},
+          mail_from = #{mailFrom},
+          alert_start = #{alertStart},
+          alert_interval = #{alertInterval},
+          upd_user_id = #{updUser}
+        WHERE deleted_yn = 'N'
+          AND service = #{service}
+    </update>
+
+    <insert id="addTelegram" parameterType="hashMap">
+        INSERT INTO t_stream_telegram (service, stream_domain, jwt_secret_key, telegram_api_key, telegram_chat_id, reg_user_id, upd_user_id)
+        VALUES (#{service}, #{streamDomain}, #{jwtSecretKey}, #{telegramApiKey}, #{telegramChatId}, #{regUser}, #{regUser})
+    </insert>
+
+    <update id="delTelegram" parameterType="hashMap">
+        UPDATE t_stream_telegram SET
+          deleted_yn = 'Y'
+        WHERE deleted_yn = 'N'
+        AND service = #{service}
+    </update>
+
+    <update id="editTelegram" parameterType="hashMap">
+        UPDATE t_stream_telegram SET
+            stream_domain = #{streamDomain},
+            jwt_secret_key = #{jwtSecretKey},
+            telegram_api_key = #{telegramApiKey},
+            telegram_chat_id = #{telegramChatId},
+            upd_user_id = #{updUser}
+        WHERE deleted_yn = 'N'
+        AND service = #{service}
+    </update>
+</mapper>

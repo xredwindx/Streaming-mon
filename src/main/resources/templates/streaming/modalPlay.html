@@ -1,0 +1,24 @@
+<div class="modal-header">
+    <h3>Play</h3>
+</div>
+<div class="modal-body">
+    <div id="player"></div>
+    Stream URL : <span ng-bind="streamUrl"></span>
+    <script type="text/javascript">
+        jwplayer("player").setup({
+            playlist: [{
+                file : angular.element(document.getElementById("player")).scope().streamUrl,
+                provider : "/static/util/HLSProvider6.swf",
+                type : "hls",
+            }],
+            aspectratio : "16:9",
+            autostart : true,
+            primary : "html5"
+        });
+    </script>
+
+</div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="ok()">확인</button>
+</div>

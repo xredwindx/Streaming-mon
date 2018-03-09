@@ -1,0 +1,15 @@
+<div class="modal-header">
+    <h3>비밀번호 초기화</h3>
+</div>
+<div class="modal-body">
+    <ul>
+        <li><span ng-bind="modalUserId"></span> 비밀번호는
+            <span class="text-danger"><span ng-bind="modalUserId"></span>1234mon</span>으로 초기화됩니다.</li>
+        <li>비밀번호 초기화를 하겠습니까?</li>
+    </ul>
+</div>
+<div class="modal-footer">
+    <div ng-class="alertClass" role="alert" ng-bind="alertMsg" ng-show="defaultAlert"></div>
+    <button class="btn btn-primary" ng-click="ok()">확인</button>
+    <button class="btn btn-warning" ng-click="cancel()">취소</button>
+</div>

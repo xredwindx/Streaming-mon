@@ -1,0 +1,169 @@
+<div class="container-fluid" ng-controller="nbpCtrl" ng-show="nbpShow">
+    <div class="col-md-12 col-sm-12">
+        <div class="text-center">
+            <h2>NBP Live Schedule</h2>
+        </div>
+        <div class="col-md-12 col-sm-12">
+            <div ng-class="nbpAlertClass" role="alert" ng-bind="nbpAlertMsg" ng-show="nbpAlert"></div>
+        </div>
+        <br/>
+        <div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
+            <div>
+                <form class="form-inline">
+                    <button type="button" class="btn btn-default btn-sm pull-right" ng-click="multiViewer()">Multi Viewer</button>
+                </form>
+            </div>
+            <table class="table table-bordered table-hover table-condensed" style="margin-top: 2%">
+                <colgroup>
+                    <col width="5%" />
+                    <col width="10%" />
+                    <col width="35%" />
+                    <col width="10%" />
+                    <col width="15%" />
+                    <col width="15%" />
+                    <col width="10%" />
+                </colgroup>
+                <tr>
+                    <th class="text-center">No</th>
+                    <th class="text-center">Volume</th>
+                    <th class="text-center">Title</th>
+                    <th class="text-center">Corporator</th>
+                    <th class="text-center">Start Time</th>
+                    <th class="text-center">End Time</th>
+                    <th class="text-center">Status</th>
+                </tr>
+                <tr ng-repeat="item in nbpList" ng-class="item.bg">
+                    <td class="text-center"><span ng-bind="$index+1"></span></td>
+                    <td class="text-center"><span ng-bind="item.channel_name"></span></td>
+                    <td class="text-center"><span ng-bind="item.title"></span></td>
+                    <td class="text-center"><span ng-bind="item.corporator"></span></td>
+                    <td class="text-center"><span ng-bind="item.start_time"></span></td>
+                    <td class="text-center"><span ng-bind="item.end_time"></span></td>
+                    <td class="text-center"><span ng-bind="item.status"></span></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<br/>
+<div class="container-fluid" ng-controller="streamingCtrl">
+    <div class="col-md-12 col-sm-12">
+        <div class="text-center">
+            <h2>장애 서버 목록</h2>
+        </div>
+        <div class="col-md-12 col-sm-12">
+            <div ng-class="streamingAlertClass" role="alert" ng-bind="streamingAlertMsg" ng-show="streamingAlert"></div>
+        </div>
+        <br/>
+        <div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
+            <div>
+                <form class="form-inline">
+                    <button type="button" class="btn btn-default btn-sm pull-right" ng-click="history()">장애로그기록</button>
+                </form>
+            </div>
+            <table class="table table-bordered table-hover table-condensed" style="margin-top: 2%">
+                <colgroup>
+                    <col width="3%" />
+                    <col width="5%" />
+                    <col width="10%" />
+                    <col width="15%" />
+                    <col width="10%" />
+                    <col width="10%" />
+                    <col width="10%" />
+                    <col width="10%" />
+                    <col width="10%" />
+                    <col width="7%" />
+                    <col width="10%" />
+                </colgroup>
+                <tr>
+                    <th class="text-center">No</th>
+                    <th class="text-center">Telco</th>
+                    <th class="text-center">Service Name</th>
+                    <th class="text-center">Host Name</th>
+                    <th class="text-center">Server Type</th>
+                    <th class="text-center">Volume</th>
+                    <th class="text-center">Stream Name</th>
+                    <th class="text-center">Status</th>
+                    <th class="text-center">Level</th>
+                    <th class="text-center">Play</th>
+                    <th class="text-center">Action</th>
+                </tr>
+                <tr ng-repeat="item in streamingList" ng-class="getBgColor(item.mon_level)">
+                    <td class="text-center"><span ng-bind="$index+1"></span></td>
+                    <td class="text-center"><span ng-bind="item.telco_gubun"></span></td>
+                    <td class="text-center"><span ng-bind="item.service"></span></td>
+                    <td class="text-center"><span ng-bind="item.host_name"></span></td>
+                    <td class="text-center"><span ng-bind="item.server_type"></span></td>
+                    <td class="text-center"><span ng-bind="item.volume"></span></td>
+                    <td class="text-center"><span ng-bind="item.stream_name"></span></td>
+                    <td class="text-center"><span ng-bind="item.mon_status"></span></td>
+                    <td class="text-center"><span ng-bind="item.mon_level"></span></td>
+                    <td class="text-center">
+                        <button class="btn btn-default btn-xs" ng-click="play(item)">Play</button>
+                    </td>
+                    <td class="text-center">
+                        <button class="btn btn-default btn-xs" ng-click="checkedListYN(item,'Y')">점검</button>&nbsp;&nbsp;
+                        <button class="btn btn-danger btn-xs" ng-click="delete(item)">삭제</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-12 col-sm-12">
+        <div class="text-center">
+            <h2>점검 서버 목록</h2>
+        </div>
+        <div class="col-md-12 col-sm-12">
+            <div ng-class="streamingCheckedAlertClass" role="alert" ng-bind="streamingCheckedAlertMsg"
+                 ng-show="streamingCheckedAlert"></div>
+        </div>
+        <div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
+            <table class="table table-bordered table-hover table-condensed" style="margin-top: 2%">
+                <colgroup>
+                    <col width="3%" />
+                    <col width="5%" />
+                    <col width="10%" />
+                    <col width="15%" />
+                    <col width="10%" />
+                    <col width="10%" />
+                    <col width="10%" />
+                    <col width="10%" />
+                    <col width="10%" />
+                    <col width="7%" />
+                    <col width="10%" />
+                </colgroup>
+                <tr>
+                    <th class="text-center">No</th>
+                    <th class="text-center">Telco</th>
+                    <th class="text-center">Service Name</th>
+                    <th class="text-center">Host Name</th>
+                    <th class="text-center">Server Type</th>
+                    <th class="text-center">Volume</th>
+                    <th class="text-center">Stream Name</th>
+                    <th class="text-center">Status</th>
+                    <th class="text-center">Level</th>
+                    <th class="text-center">Play</th>
+                    <th class="text-center">Action</th>
+                </tr>
+                <tr ng-repeat="item in streamingCheckedList" ng-class="getBgColor(item.mon_level)">
+                    <td class="text-center"><span ng-bind="$index+1"></span></td>
+                    <td class="text-center"><span ng-bind="item.telco_gubun"></span></td>
+                    <td class="text-center"><span ng-bind="item.service"></span></td>
+                    <td class="text-center"><span ng-bind="item.host_name"></span></td>
+                    <td class="text-center"><span ng-bind="item.server_type"></span></td>
+                    <td class="text-center"><span ng-bind="item.volume"></span></td>
+                    <td class="text-center"><span ng-bind="item.stream_name"></span></td>
+                    <td class="text-center"><span ng-bind="item.mon_status"></span></td>
+                    <td class="text-center"><span ng-bind="item.mon_level"></span></td>
+                    <td class="text-center">
+                        <button class="btn btn-default btn-xs" ng-click="play(item)">Play</button>
+                    </td>
+                    <td class="text-center">
+                        <button class="btn btn-default btn-xs" ng-click="checkedListYN(item,'N')">해제</button>&nbsp;&nbsp;
+                        <button class="btn btn-danger btn-xs" ng-click="delete(item)">삭제</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,13 @@
+<div class="modal-header">
+    <h3>Telegram 삭제</h3>
+</div>
+<div class="modal-body">
+    <ul>
+        <li><span ng-bind="modalServiceT"></span>의 telegram 알림을 삭제하겠습니까?</li>
+    </ul>
+</div>
+<div class="modal-footer">
+    <div ng-class="alertClass" role="alert" ng-bind="alertMsg" ng-show="defaultAlert"></div>
+    <button class="btn btn-primary" ng-click="ok()">확인</button>
+    <button class="btn btn-warning" ng-click="cancel()">취소</button>
+</div>

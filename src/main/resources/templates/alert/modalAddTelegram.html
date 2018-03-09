@@ -1,0 +1,37 @@
+<div class="modal-header">
+    <h3>Telegram 생성</h3>
+</div>
+<div class="modal-body">
+    <form>
+        <div class="form-group required">
+            <label class="control-label">Service</label>
+            <input type="text" class="form-control" ng-model="telegram.service" autofocus>
+            <div class="alert alert-warning" role="alert" ng-bind="tServiceAlertMsg" ng-show="tServiceAlert"></div>
+        </div>
+        <div class="form-group required">
+            <label class="control-label">Stream domain</label>
+            <input type="text" class="form-control" ng-model="telegram.streamDomain">
+            <div class="alert alert-warning" role="alert" ng-bind="sdAlertMsg" ng-show="sdAlert"></div>
+        </div>
+        <div class="form-group required">
+            <label class="control-label">JWT secret key</label>
+            <input type="text" class="form-control" ng-model="telegram.jwtSecretKey">
+            <div class="alert alert-warning" role="alert" ng-bind="jwtAlertMsg" ng-show="jwtAlert"></div>
+        </div>
+        <div class="form-group required">
+            <label class="control-label">Telegram api key</label>
+            <input type="text" class="form-control" ng-model="telegram.telegramApiKey">
+            <div class="alert alert-warning" role="alert" ng-bind="tApiKeyAlertMsg" ng-show="tApiKeyAlert"></div>
+        </div>
+        <div class="form-group required">
+            <label class="control-label">Telegram chat id</label>
+            <input type="text" class="form-control" ng-model="telegram.telegramChatId">
+            <div class="alert alert-warning" role="alert" ng-bind="tChatIdAlertMsg" ng-show="tChatIdAlert"></div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <div ng-class="alertClass" role="alert" ng-bind="alertMsg" ng-show="defaultAlert"></div>
+    <button class="btn btn-primary" ng-click="addTelegram()">생성</button>
+    <button class="btn btn-warning" ng-click="cancel()">취소</button>
+</div>

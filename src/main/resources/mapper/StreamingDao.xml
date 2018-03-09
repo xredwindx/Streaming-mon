@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.solbox.api.dao.StreamingDao">
+    <insert id="addStreaming" parameterType="hashMap">
+        INSERT INTO t_stream_mon (
+            telco_gubun,
+            service,
+            host_name,
+            server_type,
+            volume,
+            stream_name,
+            mon_status,
+            mon_level,
+            mon_count,
+            reg_user_id,
+            upd_user_id
+        ) VALUES (
+            #{telco},
+            #{service},
+            #{host_name},
+            #{server_type},
+            #{vol},
+            #{stream_name},
+            #{status},
+            #{mon_level},
+            #{mon_count},
+            'api',
+            'api'
+        );
+    </insert>
+
+    <insert id="addStreamingHis" parameterType="hashMap">
+        INSERT INTO t_stream_mon_his (
+            telco_gubun,
+            service,
+            host_name,
+            server_type,
+            volume,
+            stream_name,
+            mon_status,
+            reg_user_id,
+            upd_user_id
+        ) VALUES (
+            #{telco},
+            #{service},
+            #{host_name},
+            #{server_type},
+            #{vol},
+            #{stream_name},
+            #{status},
+            'api',
+            'api'
+        );
+    </insert>
+
+    <update id="updateStreaming" parameterType="hashMap">
+        UPDATE t_stream_mon SET
+          mon_level = #{mon_level},
+          mon_count = #{mon_count}
+          <if test="status == 'RECOVERY'">
+              , deleted_yn = 'Y'
+          </if>
+        WHERE deleted_yn = 'N'
+            AND telco_gubun = #{telco}
+            AND service = #{service}
+            AND host_name = #{host_name}
+            AND server_type = #{server_type}
+            AND volume = #{vol}
+            AND stream_name = #{stream_name}
+            AND mon_status = #{status}
+    </update>
+
+    <select id="getCheckStreaming" resultType="hashMap">
+        SELECT mon_level, mon_count, checked_yn
+        FROM t_stream_mon
+        WHERE deleted_yn = 'N'
+            AND telco_gubun = #{telco}
+            AND service = #{service}
+            AND host_name = #{host_name}
+            AND server_type = #{server_type}
+            AND volume = #{vol}
+            AND stream_name = #{stream_name}
+            AND mon_status = #{status}
+    </select>
+
+    <select id="getStreamingList" resultType="hashMap">
+        SELECT telco_gubun, service, host_name, server_type, volume, stream_name, mon_status, mon_level, mon_count
+        FROM t_stream_mon
+        WHERE deleted_yn = 'N'
+          AND checked_yn = #{checkedYn}
+        <if test="telcoGubun != 'All'">
+          AND telco_gubun = #{telcoGubun}
+        </if>
+    </select>
+
+    <select id="getStreamingHistoryList" resultType="hashMap">
+        SELECT z.*
+        FROM (
+            SELECT (@RN := @RN+1) AS rn,
+            smh.telco_gubun, smh.service, smh.host_name, smh.server_type, smh.volume, smh.stream_name, smh.mon_status, smh.reg_datetime
+            FROM t_stream_mon_his AS smh, (SELECT @RN := 0) AS X
+            WHERE smh.deleted_yn = 'N'
+            <if test="searchText != ''">
+                AND (
+                smh.telco_gubun LIKE CONCAT('%',#{searchText},'%')
+                OR smh.service LIKE CONCAT('%',#{searchText},'%')
+                OR smh.host_name LIKE CONCAT('%',#{searchText},'%')
+                OR smh.server_type LIKE CONCAT('%',#{searchText},'%')
+                OR smh.volume LIKE CONCAT('%',#{searchText},'%')
+                OR smh.stream_name LIKE CONCAT('%',#{searchText},'%')
+                OR smh.mon_status LIKE CONCAT('%',#{searchText},'%')
+                )
+            </if>
+            <if test="telcoGubun != 'All'">
+                AND smh.telco_gubun = #{telcoGubun}
+            </if>
+            ORDER BY smh.reg_datetime DESC
+        ) z
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <select id="historyTotalCount" resultType="int">
+        SELECT count(*)
+        FROM t_stream_mon_his
+        WHERE deleted_yn = 'N'
+        <if test="searchText != ''">
+            AND (
+            telco_gubun LIKE CONCAT('%',#{searchText},'%')
+            OR service LIKE CONCAT('%',#{searchText},'%')
+            OR host_name LIKE CONCAT('%',#{searchText},'%')
+            OR server_type LIKE CONCAT('%',#{searchText},'%')
+            OR volume LIKE CONCAT('%',#{searchText},'%')
+            OR stream_name LIKE CONCAT('%',#{searchText},'%')
+            OR mon_status LIKE CONCAT('%',#{searchText},'%')
+            )
+        </if>
+        <if test="telcoGubun != 'All'">
+            AND telco_gubun = #{telcoGubun}
+        </if>
+    </select>
+
+    <update id="updateCheckedYN" parameterType="hashMap">
+        UPDATE t_stream_mon SET
+          checked_yn = #{checkedYn},
+          upd_user_id = #{updUser}
+        WHERE deleted_yn = 'N'
+            AND service = #{service}
+            AND host_name = #{hostName}
+            AND server_type = #{serverType}
+            AND volume = #{volume}
+            AND stream_name = #{streamName}
+            AND mon_status = #{monStatus}
+    </update>
+
+    <update id="deleteStreaming" parameterType="hashMap">
+        UPDATE t_stream_mon SET
+          deleted_yn = 'Y',
+          upd_user_id = #{updUser}
+        WHERE deleted_yn = 'N'
+            AND service = #{service}
+            AND host_name = #{hostName}
+            AND server_type = #{serverType}
+            AND volume = #{volume}
+            AND stream_name = #{streamName}
+            AND mon_status = #{monStatus}
+    </update>
+</mapper>

@@ -1,0 +1,59 @@
+<div class="container-fluid">
+    <div class="text-center">
+        <h2>User 관리</h2>
+    </div>
+    <div class="col-md-12 col-sm-12">
+        <div ng-class="alertClass" role="alert" ng-bind="alertMsg" ng-show="defaultAlert"></div>
+    </div>
+    <br/>
+    <div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
+        <div>
+            <form class="form-inline">
+                <div class="form-group">
+                    <label>ID</label>&nbsp;&nbsp;
+                    <input type="text" class="form-control input-sm" ng-model="searchText" ng-keypress="enterEvent($event)">
+                </div>
+                <button type="button" class="btn btn-primary btn-sm" ng-click="search()">검색</button>
+                &nbsp;&nbsp;<label class="text-right">총 건수: <span ng-bind="page.totalCount"></span></label>
+                <button type="button" class="btn btn-default btn-sm pull-right" ng-click="addUser()">계정생성</button>
+            </form>
+        </div>
+        <table class="table table-bordered table-hover table-condensed" style="margin-top: 1%">
+            <colgroup>
+                <col width="5%" />
+                <col width="15%" />
+                <col width="10%" />
+                <col width="10%" />
+                <col width="15%" />
+                <col width="15%" />
+                <col width="30%" />
+            </colgroup>
+            <tr class="info">
+                <th class="text-center">No</th>
+                <th class="text-center">ID</th>
+                <th class="text-center">텔코사</th>
+                <th class="text-center">권한</th>
+                <th class="text-center">생성일</th>
+                <th class="text-center">수정일</th>
+                <th class="text-center">action</th>
+            </tr>
+            <tr ng-repeat="item in userList">
+                <td class="text-center"><span ng-bind="item.rn"></span></td>
+                <td class="text-center"><span ng-bind="item.user_id"></span></td>
+                <td class="text-center"><span ng-bind="item.telco_gubun"></span></td>
+                <td class="text-center"><span ng-bind="item.user_level"></span></td>
+                <td class="text-center"><span ng-bind="(item.reg_datetime | date:'yyyy-MM-dd HH:mm:ss')"></span></td>
+                <td class="text-center"><span ng-bind="(item.upd_datetime | date:'yyyy-MM-dd HH:mm:ss')"></span></td>
+                <td class="text-center">
+                    <button class="btn btn-default btn-xs" ng-click="pwdReset(item.user_id)">비밀번호초기화</button>&nbsp;&nbsp;
+                    <button class="btn btn-primary btn-xs" ng-click="editUser(item.user_id)">변경</button>&nbsp;&nbsp;
+                    <button class="btn btn-danger btn-xs" ng-click="delUser(item.user_id)">삭제</button>
+                </td>
+            </tr>
+        </table>
+        <div class="text-center">
+            <ul uib-pagination total-items="page.totalCount" ng-model="page.currentPage" items-per-page="page.pageSize"
+                ng-change="pageChanged()" boundary-link-numbers="true" max-size="5" previous-text="이전" next-text="다음"></ul>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,365 @@
+{{#layout}}
+<div ng-controller="nbpMonCtrl" class="container-fluid" style="margin-top: 3%">
+    <div ng-class="nbpAlertClass" role="alert" ng-bind="nbpAlertMsg" ng-show="nbpAlert"></div>
+    <div>
+        <table class="table table-bordered table-hover table-condensed" style="margin-top: 1%">
+            <colgroup>
+                <col width="20%" />
+                <col width="20%" />
+                <col width="20%" />
+                <col width="20%" />
+                <col width="20%" />
+            </colgroup>
+            <tr style="height: 25px">
+                <th ng-class="nbpTdClass(nbpData.ch71)">ch71_Main</th>
+                <th ng-class="nbpTdClass(nbpData.ch72)">ch72_Main</th>
+                <th ng-class="nbpTdClass(nbpData.ch73)">ch73_Main</th>
+                <th ng-class="nbpTdClass(nbpData.ch74)">ch74_Main</th>
+                <th ng-class="nbpTdClass(nbpData.ch75)">ch75_Main</th>
+            </tr>
+            <tr style="height: 100px">
+                <td class="text-center">
+                    <embed src="/static/util/StrobeMediaPlayback.swf"
+                           type="application/x-shockwave-flash"
+                           allowscriptaccess="always"
+                           allowfullscreen="true"
+                           wmode="direct"
+                           width="352"
+                           height="198"
+                           flashvars="src=rtmp://m.ch71.nbplive.x-cdn.com/ch71/_definst_/ch71_800.stream&streamType=live&autoPlay=true&muted=true&bufferingOverlay=false">
+                    </embed>
+                </td>
+                <td class="text-center">
+                    <embed src="/static/util/StrobeMediaPlayback.swf"
+                           type="application/x-shockwave-flash"
+                           allowscriptaccess="always"
+                           allowfullscreen="true"
+                           wmode="direct"
+                           width="352"
+                           height="198"
+                           flashvars="src=rtmp://m.ch72.nbplive.x-cdn.com/ch72/_definst_/ch72_800.stream&streamType=live&autoPlay=true&muted=true&bufferingOverlay=false">
+                    </embed>
+                </td>
+                <td class="text-center">
+                    <embed src="/static/util/StrobeMediaPlayback.swf"
+                           type="application/x-shockwave-flash"
+                           allowscriptaccess="always"
+                           allowfullscreen="true"
+                           wmode="direct"
+                           width="352"
+                           height="198"
+                           flashvars="src=rtmp://m.ch73.nbplive.x-cdn.com/ch73/_definst_/ch73_800.stream&streamType=live&autoPlay=true&muted=true&bufferingOverlay=false">
+                    </embed>
+                </td>
+                <td class="text-center">
+                    <embed src="/static/util/StrobeMediaPlayback.swf"
+                           type="application/x-shockwave-flash"
+                           allowscriptaccess="always"
+                           allowfullscreen="true"
+                           wmode="direct"
+                           width="352"
+                           height="198"
+                           flashvars="src=rtmp://m.ch74.nbplive.x-cdn.com/ch74/_definst_/ch74_800.stream&streamType=live&autoPlay=true&muted=true&bufferingOverlay=false">
+                    </embed>
+                </td>
+                <td class="text-center">
+                    <embed src="/static/util/StrobeMediaPlayback.swf"
+                           type="application/x-shockwave-flash"
+                           allowscriptaccess="always"
+                           allowfullscreen="true"
+                           wmode="direct"
+                           width="352"
+                           height="198"
+                           flashvars="src=rtmp://m.ch75.nbplive.x-cdn.com/ch75/_definst_/ch75_800.stream&streamType=live&autoPlay=true&muted=true&bufferingOverlay=false">
+                    </embed>
+                </td>
+            </tr>
+            <tr style="height: 25px">
+                <th ng-class="nbpTdClass(nbpData.ch71)">ch71_Backup</th>
+                <th ng-class="nbpTdClass(nbpData.ch72)">ch72_Backup</th>
+                <th ng-class="nbpTdClass(nbpData.ch73)">ch73_Backup</th>
+                <th ng-class="nbpTdClass(nbpData.ch74)">ch74_Backup</th>
+                <th ng-class="nbpTdClass(nbpData.ch75)">ch75_Backup</th>
+            </tr>
+            <tr style="height: 100px">
+                <td class="text-center">
+                    <embed src="/static/util/StrobeMediaPlayback.swf"
+                           type="application/x-shockwave-flash"
+                           allowscriptaccess="always"
+                           allowfullscreen="true"
+                           wmode="direct"
+                           width="352"
+                           height="198"
+                           flashvars="src=rtmp://b.ch71.nbplive.x-cdn.com/ch71/_definst_/ch71_800.stream&streamType=live&autoPlay=true&muted=true&bufferingOverlay=false">
+                    </embed>
+                </td>
+                <td class="text-center">
+                    <embed src="/static/util/StrobeMediaPlayback.swf"
+                           type="application/x-shockwave-flash"
+                           allowscriptaccess="always"
+                           allowfullscreen="true"
+                           wmode="direct"
+                           width="352"
+                           height="198"
+                           flashvars="src=rtmp://b.ch72.nbplive.x-cdn.com/ch72/_definst_/ch72_800.stream&streamType=live&autoPlay=true&muted=true&bufferingOverlay=false">
+                    </embed>
+                </td>
+                <td class="text-center">
+                    <embed src="/static/util/StrobeMediaPlayback.swf"
+                           type="application/x-shockwave-flash"
+                           allowscriptaccess="always"
+                           allowfullscreen="true"
+                           wmode="direct"
+                           width="352"
+                           height="198"
+                           flashvars="src=rtmp://b.ch73.nbplive.x-cdn.com/ch73/_definst_/ch73_800.stream&streamType=live&autoPlay=true&muted=true&bufferingOverlay=false">
+                    </embed>
+                </td>
+                <td class="text-center">
+                    <embed src="/static/util/StrobeMediaPlayback.swf"
+                           type="application/x-shockwave-flash"
+                           allowscriptaccess="always"
+                           allowfullscreen="true"
+                           wmode="direct"
+                           width="352"
+                           height="198"
+                           flashvars="src=rtmp://b.ch74.nbplive.x-cdn.com/ch74/_definst_/ch74_800.stream&streamType=live&autoPlay=true&muted=true&bufferingOverlay=false">
+                    </embed>
+                </td>
+                <td class="text-center">
+                    <embed src="/static/util/StrobeMediaPlayback.swf"
+                           type="application/x-shockwave-flash"
+                           allowscriptaccess="always"
+                           allowfullscreen="true"
+                           wmode="direct"
+                           width="352"
+                           height="198"
+                           flashvars="src=rtmp://b.ch75.nbplive.x-cdn.com/ch75/_definst_/ch75_800.stream&streamType=live&autoPlay=true&muted=true&bufferingOverlay=false">
+                    </embed>
+                </td>
+            </tr>
+            <tr style="height: 25px">
+                <th ng-class="nbpTdClass(nbpData.ch76)">ch76_Main</th>
+                <th ng-class="nbpTdClass(nbpData.ch77)">ch77_Main</th>
+                <th ng-class="nbpTdClass(nbpData.ch78)">ch78_Main</th>
+                <th ng-class="nbpTdClass(nbpData.ch79)">ch79_Main</th>
+                <th ng-class="nbpTdClass(nbpData.ch80)">ch80_Main</th>
+            </tr>
+            <tr style="height: 100px">
+                <td class="text-center">
+                    <embed src="/static/util/StrobeMediaPlayback.swf"
+                           type="application/x-shockwave-flash"
+                           allowscriptaccess="always"
+                           allowfullscreen="true"
+                           wmode="direct"
+                           width="352"
+                           height="198"
+                           flashvars="src=rtmp://m.ch76.nbplive.x-cdn.com/ch76/_definst_/ch76_800.stream&streamType=live&autoPlay=true&muted=true&bufferingOverlay=false">
+                    </embed>
+                </td>
+                <td class="text-center">
+                    <embed src="/static/util/StrobeMediaPlayback.swf"
+                           type="application/x-shockwave-flash"
+                           allowscriptaccess="always"
+                           allowfullscreen="true"
+                           wmode="direct"
+                           width="352"
+                           height="198"
+                           flashvars="src=rtmp://m.ch77.nbplive.x-cdn.com/ch77/_definst_/ch77_800.stream&streamType=live&autoPlay=true&muted=true&bufferingOverlay=false">
+                    </embed>
+                </td>
+                <td class="text-center">
+                    <embed src="/static/util/StrobeMediaPlayback.swf"
+                           type="application/x-shockwave-flash"
+                           allowscriptaccess="always"
+                           allowfullscreen="true"
+                           wmode="direct"
+                           width="352"
+                           height="198"
+                           flashvars="src=rtmp://m.ch78.nbplive.x-cdn.com/ch78/_definst_/ch78_800.stream&streamType=live&autoPlay=true&muted=true&bufferingOverlay=false">
+                    </embed>
+                </td>
+                <td class="text-center">
+                    <embed src="/static/util/StrobeMediaPlayback.swf"
+                           type="application/x-shockwave-flash"
+                           allowscriptaccess="always"
+                           allowfullscreen="true"
+                           wmode="direct"
+                           width="352"
+                           height="198"
+                           flashvars="src=rtmp://m.ch79.nbplive.x-cdn.com/ch79/_definst_/ch79_800.stream&streamType=live&autoPlay=true&muted=true&bufferingOverlay=false">
+                    </embed>
+                </td>
+                <td class="text-center">
+                    <embed src="/static/util/StrobeMediaPlayback.swf"
+                           type="application/x-shockwave-flash"
+                           allowscriptaccess="always"
+                           allowfullscreen="true"
+                           wmode="direct"
+                           width="352"
+                           height="198"
+                           flashvars="src=rtmp://m.ch80.nbplive.x-cdn.com/ch80/_definst_/ch80_800.stream&streamType=live&autoPlay=true&muted=true&bufferingOverlay=false">
+                    </embed>
+                </td>
+            </tr>
+            <tr style="height: 25px">
+                <th ng-class="nbpTdClass(nbpData.ch76)">ch76_Backup</th>
+                <th ng-class="nbpTdClass(nbpData.ch77)">ch77_Backup</th>
+                <th ng-class="nbpTdClass(nbpData.ch78)">ch78_Backup</th>
+                <th ng-class="nbpTdClass(nbpData.ch79)">ch79_Backup</th>
+                <th ng-class="nbpTdClass(nbpData.ch80)">ch80_Backup</th>
+            </tr>
+            <tr style="height: 100px">
+                <td class="text-center">
+                    <embed src="/static/util/StrobeMediaPlayback.swf"
+                           type="application/x-shockwave-flash"
+                           allowscriptaccess="always"
+                           allowfullscreen="true"
+                           wmode="direct"
+                           width="352"
+                           height="198"
+                           flashvars="src=rtmp://b.ch76.nbplive.x-cdn.com/ch76/_definst_/ch76_800.stream&streamType=live&autoPlay=true&muted=true&bufferingOverlay=false">
+                    </embed>
+                </td>
+                <td class="text-center">
+                    <embed src="/static/util/StrobeMediaPlayback.swf"
+                           type="application/x-shockwave-flash"
+                           allowscriptaccess="always"
+                           allowfullscreen="true"
+                           wmode="direct"
+                           width="352"
+                           height="198"
+                           flashvars="src=rtmp://b.ch77.nbplive.x-cdn.com/ch77/_definst_/ch77_800.stream&streamType=live&autoPlay=true&muted=true&bufferingOverlay=false">
+                    </embed>
+                </td>
+                <td class="text-center">
+                    <embed src="/static/util/StrobeMediaPlayback.swf"
+                           type="application/x-shockwave-flash"
+                           allowscriptaccess="always"
+                           allowfullscreen="true"
+                           wmode="direct"
+                           width="352"
+                           height="198"
+                           flashvars="src=rtmp://b.ch78.nbplive.x-cdn.com/ch78/_definst_/ch78_800.stream&streamType=live&autoPlay=true&muted=true&bufferingOverlay=false">
+                    </embed>
+                </td>
+                <td class="text-center">
+                    <embed src="/static/util/StrobeMediaPlayback.swf"
+                           type="application/x-shockwave-flash"
+                           allowscriptaccess="always"
+                           allowfullscreen="true"
+                           wmode="direct"
+                           width="352"
+                           height="198"
+                           flashvars="src=rtmp://b.ch79.nbplive.x-cdn.com/ch79/_definst_/ch79_800.stream&streamType=live&autoPlay=true&muted=true&bufferingOverlay=false">
+                    </embed>
+                </td>
+                <td class="text-center">
+                    <embed src="/static/util/StrobeMediaPlayback.swf"
+                           type="application/x-shockwave-flash"
+                           allowscriptaccess="always"
+                           allowfullscreen="true"
+                           wmode="direct"
+                           width="352"
+                           height="198"
+                           flashvars="src=rtmp://b.ch80.nbplive.x-cdn.com/ch80/_definst_/ch80_800.stream&streamType=live&autoPlay=true&muted=true&bufferingOverlay=false">
+                    </embed>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<script type="text/javascript">
+    app.controller("nbpMonCtrl", function($scope, $http, $filter, $interval) {
+        // init
+        $scope.init = function () {
+            var curDate = new Date();
+            $scope.curDateYmd = $filter("date")(curDate, "yyyyMMdd");
+
+            $http({
+                method: "POST",
+                url: "/api/nbp",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                data: { "now": $scope.curDateYmd }
+            }).then(function success (res) {
+                $scope.nbpData = $scope.nbpDataCustom(res.data, curDate);
+                $scope.nbpDefaultAlert = false;
+            }, function error (error) {
+                $scope.nbpAlertHandling("에러가 발생하였습니다", "danger");
+            });
+        }
+
+        $scope.dateParse = function (str) {
+            var y = str.substring(0,4);
+            var m = str.substring(4,6);
+            var d = str.substring(6,8);
+            var h = str.substring(8,10);
+            var mm = str.substring(10,12);
+            var s = str.substring(12,14);
+
+            return new Date(y,m-1,d,h,mm,s);
+        }
+
+        $scope.dateParse2 = function (str) {
+            var y = str.substring(0,4);
+            var m = str.substring(5,7);
+            var d = str.substring(8,10);
+            var h = str.substring(11,13);
+            var mm = str.substring(14,16);
+            var s = str.substring(17,19);
+
+            return new Date(y,m-1,d,h,mm,s);
+        }
+
+        $scope.nbpAlertHandling = function (alertMsg, alertType) {
+            $scope.nbpAlertClass = ["alert"];
+
+            if(alertType == "success") {
+                $scope.nbpAlertClass.push("alert-success");
+            } else {
+                $scope.nbpAlertClass.push("alert-danger");
+            }
+
+            $scope.nbpDefaultAlert = true;
+            $scope.nbpAlertMsg = alertMsg;
+        }
+
+        $scope.nbpDataCustom = function (nbpData, curDate) {
+            var nbpColorJson = {};
+            var dateNowStr = $filter("date")(curDate, "yyyyMMddHHmmss");
+            var dateNow = $scope.dateParse(dateNowStr);
+
+            angular.forEach(nbpData, function (value, key) {
+                var start_time = $scope.dateParse2(value.start_time);
+                var readyTime = angular.copy(start_time);
+                readyTime.setMinutes(readyTime.getMinutes() - 30);
+                var end_time = $scope.dateParse2(value.end_time);
+
+                if(dateNow >= start_time && dateNow < end_time) {
+                    nbpColorJson[value.channel_name] = "danger";
+                } else if(dateNow >= readyTime && dateNow < start_time) {
+                    nbpColorJson[value.channel_name] = "info";
+                }
+            });
+
+            return nbpColorJson
+        }
+
+        // init
+        $scope.init();
+
+        // refresh
+        $interval(function () { $scope.init(); }, 180*1000);
+
+        $scope.nbpTdClass = function (item) {
+            var tdCls =  ["text-center"];
+            if(item != undefined) {
+                tdCls.push(item);
+            }
+            return tdCls;
+        }
+    });
+</script>
+{{/layout}}

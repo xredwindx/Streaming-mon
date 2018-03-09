@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.solbox.api.dao.UserDao">
+    <select id="getUserInfo" resultType="hashMap">
+        SELECT user_id, telco_gubun, user_level
+        FROM t_user
+        WHERE deleted_yn='N'
+          AND user_id=#{uid}
+          AND user_pwd=SHA2(#{pwd}, 256)
+    </select>
+
+    <update id="changePwd" parameterType="hashMap">
+        UPDATE t_user SET
+          user_pwd = SHA2(#{newPwd}, 256)
+        WHERE user_id=#{uid}
+          AND user_pwd=SHA2(#{curPwd}, 256)
+    </update>
+
+    <select id="getUserList" resultType="hashMap">
+        SELECT z.*
+        FROM (
+            SELECT (@RN := @RN+1) AS rn,
+              u.user_id, u.telco_gubun, u.user_level, u.reg_datetime, u.upd_datetime
+            FROM t_user AS u, (SELECT @RN := 0) AS X
+            WHERE u.deleted_yn='N'
+            <if test="searchText != ''">
+                AND u.user_id LIKE CONCAT('%',#{searchText},'%')
+            </if>
+            ORDER BY upd_datetime DESC
+        ) z
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <select id="totalCount" resultType="int">
+        SELECT count(*)
+        FROM t_user
+        WHERE deleted_yn = 'N'
+        <if test="searchText != ''">
+            AND user_id LIKE CONCAT('%',#{searchText},'%')
+        </if>
+    </select>
+
+    <select id="getChkUserId" resultType="int">
+        SELECT COUNT(*)
+        FROM t_user
+        WHERE deleted_yn='N'
+          AND user_id = #{uid}
+    </select>
+
+    <insert id="insertUser" parameterType="hashMap">
+        INSERT INTO t_user (user_id, user_pwd, telco_gubun, user_level, reg_user_id, upd_user_id)
+        VALUES (#{uid}, SHA2(#{pwd}, 256), #{telco}, #{level}, #{regUser}, #{regUser})
+    </insert>
+
+    <update id="pwdReset" parameterType="hashMap">
+        UPDATE t_user SET
+          user_pwd = SHA2(#{pwd}, 256),
+          upd_user_id = #{updUser}
+        WHERE user_id = #{uid}
+          AND deleted_yn = 'N'
+    </update>
+
+    <update id="deleteUser" parameterType="hashMap">
+        UPDATE t_user SET
+          deleted_yn = 'Y',
+          upd_user_id = #{updUser}
+        WHERE user_id = #{uid}
+          AND deleted_yn = 'N'
+    </update>
+
+    <select id="getUser" resultType="hashMap">
+        SELECT telco_gubun, user_level
+        FROM t_user
+        WHERE deleted_yn = 'N'
+          AND user_id = #{uid}
+    </select>
+
+    <update id="updateUser" parameterType="hashMap">
+        UPDATE t_user SET
+          telco_gubun = #{telco},
+          user_level = #{level},
+          upd_user_id = #{updUser}
+        WHERE user_id = #{uid}
+        AND deleted_yn = 'N'
+    </update>
+</mapper>

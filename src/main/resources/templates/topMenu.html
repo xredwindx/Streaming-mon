@@ -1,0 +1,61 @@
+<nav ng-controller="topMenuCtrl" class="navbar navbar-default navbar-static-top navbar-inverse">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle collapsed" aria-expanded="false" aria-controls="navbar" type="button" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" ui-sref="streaming" href="#/">Live Streaming Monitor</a>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a style="cursor: pointer;" class="dropdown-toggle visible-lg visible-sm visible-xs" role="button" aria-expanded="false" aria-haspopup="true" data-toggle="dropdown">
+                        <span ng-bind="userID"></span>
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a ng-click="logoutBtn()">로그아웃</a>
+                        </li>
+                        <li>
+                            <a ui-sref="pwdChange" href="#/pwdChange">패스워드변경</a>
+                        </li>
+                        <li ng-model="userMenu" ng-show="userMenuShow">
+                            <a ui-sref="userAdmin" href="#/userAdmin">User 관리</a>
+                        </li>
+                        <li ng-model="alertMenu" ng-show="alertMenuShow">
+                            <a ui-sref="alertConfig" href="#/alertConfig">Alert 관리</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<script type="text/javascript">
+    app.controller("topMenuCtrl", function ($scope, $http, $window) {
+        // init
+        $scope.init = function () {
+            var userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+            if (userInfo == null) {
+                $window.location.href = "/login?error=406";
+            }
+            $scope.userID = userInfo.user_id;
+
+            if(userInfo.telco_gubun == "All" && userInfo.user_level == "S") {
+                $scope.userMenuShow = true;
+                $scope.alertMenuShow = true;
+            }
+        }
+
+        $scope.init();
+
+        $scope.logoutBtn = function () {
+            sessionStorage.clear();
+            $window.location.href = "/login";
+        }
+    });
+</script>

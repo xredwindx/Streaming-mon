@@ -1,0 +1,138 @@
+<div class="container-fluid">
+    <div class="text-center">
+        <h2>Alert 관리</h2>
+    </div>
+    <div class="col-md-12 col-sm-12">
+        <div ng-class="configAlertClass" role="alert" ng-bind="configAlertMsg" ng-show="configAlert"></div>
+    </div>
+    <div class="col-md-12 col-sm-12">
+        <div ng-class="telegramAlertClass" role="alert" ng-bind="telegramAlertMsg" ng-show="telegramAlert"></div>
+    </div>
+    <uib-tabset active="active">
+        <uib-tab index="0" heading="sms, email">
+            <div class="col-md-12 col-sm-12" style="margin-top: 1%">
+                <div>
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label>Service</label>&nbsp;&nbsp;
+                            <input type="text" class="form-control input-sm" ng-model="searchText.alert" ng-keypress="enterEvent($event,'alert')">
+                        </div>
+                        <button type="button" class="btn btn-primary btn-sm" ng-click="search('alert')">검색</button>
+                        &nbsp;&nbsp;<label class="text-right">총 건수: <span ng-bind="alertPage.totalCount"></span></label>
+                        <button type="button" class="btn btn-default btn-sm pull-right" ng-click="addAlert()">생성</button>
+                    </form>
+                </div>
+                <table class="table table-bordered table-hover table-condensed" style="margin-top: 1%">
+                    <colgroup>
+                        <col width="3%" />
+                        <col width="5%" />
+                        <col width="7%" />
+                        <col width="15%" />
+                        <col width="5%" />
+                        <col width="5%" />
+                        <col width="5%" />
+                        <col width="15%" />
+                        <col width="5%" />
+                        <col width="5%" />
+                        <col width="10%" />
+                        <col width="5%" />
+                        <col width="5%" />
+                        <col width="10%" />
+                    </colgroup>
+                    <tr class="info">
+                        <th class="text-center">No</th>
+                        <th class="text-center">텔코사</th>
+                        <th class="text-center">Service</th>
+                        <th class="text-center">SMS<br/>url</th>
+                        <th class="text-center">SMS<br/>url user</th>
+                        <th class="text-center">SMS<br/>phone</th>
+                        <th class="text-center">SMS<br/>callback</th>
+                        <th class="text-center">Mail<br/>url</th>
+                        <th class="text-center">Mail<br/>url user</th>
+                        <th class="text-center">Mail to</th>
+                        <th class="text-center">Mail from</th>
+                        <th class="text-center">Start</th>
+                        <th class="text-center">Interval</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                    <tr ng-repeat="item in alertList">
+                        <td class="text-center"><span ng-bind="item.rn"></span></td>
+                        <td class="text-center"><span ng-bind="item.telco_gubun"></span></td>
+                        <td class="text-center"><span ng-bind="item.service"></span></td>
+                        <td class="text-center"><span ng-bind="item.sms_url"></span></td>
+                        <td class="text-center"><span ng-bind="item.sms_url_id"></span><br/>
+                            /<span ng-bind="item.sms_url_pwd"></span></td>
+                        <td class="text-center"><span ng-bind="item.sms_phone"></span></td>
+                        <td class="text-center"><span ng-bind="item.sms_callback"></span></td>
+                        <td class="text-center"><span ng-bind="item.mail_url"></span></td>
+                        <td class="text-center"><span ng-bind="item.mail_url_id"></span><br/>
+                            /<span ng-bind="item.mail_url_pwd"></span></td>
+                        <td class="text-center"><span ng-bind="item.mail_to"></span></td>
+                        <td class="text-center"><span ng-bind="item.mail_from"></span></td>
+                        <td class="text-center"><span ng-bind="item.alert_start"></span></td>
+                        <td class="text-center"><span ng-bind="item.alert_interval"></span></td>
+                        <td class="text-center">
+                            <button class="btn btn-primary btn-xs" ng-click="editAlert(item.service)">변경</button>&nbsp;&nbsp;
+                            <button class="btn btn-danger btn-xs" ng-click="delAlert(item.service)">삭제</button>
+                        </td>
+                    </tr>
+                </table>
+                <div class="text-center">
+                    <ul uib-pagination total-items="alertPage.totalCount" ng-model="alertPage.currentPage" items-per-page="alertPage.pageSize"
+                        ng-change="alertPageChanged()" boundary-link-numbers="true" max-size="5" previous-text="이전" next-text="다음"></ul>
+                </div>
+            </div>
+        </uib-tab>
+        <uib-tab index="1" heading="telegram">
+            <div class="col-md-12 col-sm-12" style="margin-top: 1%">
+                <div>
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label>Service</label>&nbsp;&nbsp;
+                            <input type="text" class="form-control input-sm" ng-model="searchText.telegram" ng-keypress="enterEvent($event,'telegram')">
+                        </div>
+                        <button type="button" class="btn btn-primary btn-sm" ng-click="search('telegram')">검색</button>
+                        &nbsp;&nbsp;<label class="text-right">총 건수: <span ng-bind="telegramPage.totalCount"></span></label>
+                        <button type="button" class="btn btn-default btn-sm pull-right" ng-click="addTelegram()">생성</button>
+                    </form>
+                </div>
+                <table class="table table-bordered table-hover table-condensed" style="margin-top: 1%">
+                    <colgroup>
+                        <col width="5%" />
+                        <col width="10%" />
+                        <col width="15%" />
+                        <col width="15%" />
+                        <col width="15%" />
+                        <col width="10%" />
+                        <col width="30%" />
+                    </colgroup>
+                    <tr class="info">
+                        <th class="text-center">No</th>
+                        <th class="text-center">Service</th>
+                        <th class="text-center">Stream domain</th>
+                        <th class="text-center">JWT secret key</th>
+                        <th class="text-center">Telegram api key</th>
+                        <th class="text-center">Telegram chat id</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                    <tr ng-repeat="item in telegramList">
+                        <td class="text-center"><span ng-bind="item.rn"></span></td>
+                        <td class="text-center"><span ng-bind="item.service"></span></td>
+                        <td class="text-center"><span ng-bind="item.stream_domain"></span></td>
+                        <td class="text-center"><span ng-bind="item.jwt_secret_key"></span></td>
+                        <td class="text-center"><span ng-bind="item.telegram_api_key"></span></td>
+                        <td class="text-center"><span ng-bind="item.telegram_chat_id"></span></td>
+                        <td class="text-center">
+                            <button class="btn btn-primary btn-xs" ng-click="editTelegram(item.service)">변경</button>&nbsp;&nbsp;
+                            <button class="btn btn-danger btn-xs" ng-click="delTelegram(item.service)">삭제</button>
+                        </td>
+                    </tr>
+                </table>
+                <div class="text-center">
+                    <ul uib-pagination total-items="telegramPage.totalCount" ng-model="telegramPage.currentPage" items-per-page="telegramPage.pageSize"
+                        ng-change="telegramPageChanged()" boundary-link-numbers="true" max-size="5" previous-text="이전" next-text="다음"></ul>
+                </div>
+            </div>
+        </uib-tab>
+    </uib-tabset>
+</div>
