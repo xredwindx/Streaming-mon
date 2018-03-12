@@ -2,11 +2,13 @@
 <configuration>
     <include resource="org/springframework/boot/logging/logback/defaults.xml" />
 
+    <property resource="application-prod.properties" />
+
     <appender name="dailyRollingFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <append>true</append>
 
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>../tomcat/logs/application.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${server.tomcat.basedir}/logs/application.%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>90</maxHistory>
         </rollingPolicy>
 
