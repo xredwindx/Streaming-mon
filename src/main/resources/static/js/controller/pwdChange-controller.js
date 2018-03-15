@@ -12,6 +12,8 @@ routeApp.controller("pwdChangeCtrl", function ($scope, $http) {
             new : "",
             confirm : ""
         };
+
+        $scope.pwd = angular.copy($scope.initial);
     }
     $scope.init();
 

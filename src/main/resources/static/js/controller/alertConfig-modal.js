@@ -24,7 +24,7 @@ routeApp.controller("addAlertModalCtrl", function ($scope, $uibModalInstance, $h
             alertStart : "5",
             alertInterval : "10"
         };
-        $scope.alert = $scope.initial;
+        $scope.alert = angular.copy($scope.initial);
 
         var userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
         $scope.userID = userInfo.user_id;
