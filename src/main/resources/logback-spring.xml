@@ -8,7 +8,7 @@
         <append>true</append>
 
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${strmon.logs_dir}/logs/application.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${strmon.logs_dir}/application.%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>90</maxHistory>
         </rollingPolicy>
 
