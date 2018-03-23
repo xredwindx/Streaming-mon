@@ -56,6 +56,7 @@
 
     <update id="updateStreaming" parameterType="hashMap">
         UPDATE t_stream_mon SET
+          mon_status = #{status},
           mon_level = #{mon_level},
           mon_count = #{mon_count}
           <if test="status == 'RECOVERY'">
@@ -68,7 +69,6 @@
             AND server_type = #{server_type}
             AND volume = #{vol}
             AND stream_name = #{stream_name}
-            AND mon_status = #{status}
     </update>
 
     <select id="getCheckStreaming" resultType="hashMap">
@@ -81,7 +81,6 @@
             AND server_type = #{server_type}
             AND volume = #{vol}
             AND stream_name = #{stream_name}
-            AND mon_status = #{status}
     </select>
 
     <select id="getStreamingList" resultType="hashMap">
