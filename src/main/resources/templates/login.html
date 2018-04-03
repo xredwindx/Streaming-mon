@@ -86,7 +86,7 @@
                 headers: {
                     "Content-Type": "application/json"
                 },
-                data: { "uid": $scope.uid, "pwd": $scope.pwd }
+                data: { "uid": $scope.uid, "pwd": $window.btoa($scope.pwd) }
             }).then(function success (res) {
                if (res.data == "") {
                    $scope.alertHandling("로그인에 실패하였습니다");

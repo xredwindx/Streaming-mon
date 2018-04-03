@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Base64;
 import java.util.Map;
 
 /**
@@ -27,6 +28,12 @@ public class UserController {
         Map<String, Object> userInfo = null;
 
         try {
+            // pwd base64 decode
+            String pwdEn = (String) param.get("pwd");
+            byte[] pwdBytes = Base64.getDecoder().decode(pwdEn);
+            String pwd = new String(pwdBytes, "UTF-8");
+            param.put("pwd", pwd);
+
             userInfo = userService.getUserInfo(param);
         } catch(Exception e) {
             log.error(e.getMessage(), e);
