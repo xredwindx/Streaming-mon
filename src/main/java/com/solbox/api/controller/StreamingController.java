@@ -33,10 +33,14 @@ public class StreamingController {
                 Map<String, Object> chkInfo = streamingService.getCheckStreaming(param);
 
                 if (chkInfo == null) { // 생성
-                    monCnt += 1;
-                    param.put("mon_count", monCnt);
-                    param.put("mon_level", "Warning");
-                    streamingService.addStreaming(param);
+                    // RECOVERY인 경우 생성 무시
+                    String s = (String) param.get("status");
+                    if (!s.equalsIgnoreCase("RECOVERY")) {
+                        monCnt += 1;
+                        param.put("mon_count", monCnt);
+                        param.put("mon_level", "Warning");
+                        streamingService.addStreaming(param);
+                    }
                 } else { // 수정
                     monCnt = (Long) chkInfo.get("mon_count");
                     monCnt += 1;
