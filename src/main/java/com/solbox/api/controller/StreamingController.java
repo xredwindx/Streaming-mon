@@ -31,46 +31,57 @@ public class StreamingController {
         try {
             if (param.get("status") != null) {
                 Map<String, Object> chkInfo = streamingService.getCheckStreaming(param);
+                String s = (String) param.get("status");
 
                 if (chkInfo == null) { // 생성
-                    // RECOVERY인 경우 생성 무시
-                    String s = (String) param.get("status");
-                    if (!s.equalsIgnoreCase("RECOVERY")) {
+                    if (s.equalsIgnoreCase("RECOVERY") || s.equalsIgnoreCase("OK")) { // 정상
+                        param.put("mon_level", "OK");
+                    } else { // 에러
                         monCnt += 1;
-                        param.put("mon_count", monCnt);
                         param.put("mon_level", "Warning");
-                        streamingService.addStreaming(param);
                     }
-                } else { // 수정
-                    monCnt = (Long) chkInfo.get("mon_count");
-                    monCnt += 1;
-                    if (monCnt == 2) {
-                        param.put("mon_level", "Error");
-                    } else {
-                        param.put("mon_level", "Critical");
-                    }
-                    param.put("mon_count", monCnt);
-                    streamingService.updateStreaming(param);
 
-                    // sms, email alert
-                    Map<String, Object> alertInfo = alertService.getStreamingAlert(param);
-                    // 점검이 아닐경우
-                    if(alertInfo != null && chkInfo.get("checked_yn").toString().equals("N")) {
-                        // alert 주기
-                        if (monCnt <= (int)alertInfo.get("alert_start")
-                                    || (monCnt % (int)alertInfo.get("alert_interval")) == 0) {
-                            // sms alert 값 없으면 안 보내는 케이스 있음
-                            if(!alertInfo.get("sms_url").toString().equals("")) {
-                                alertService.sendSMS(param, alertInfo);
-                            }
-                            // email notice
-                            alertService.sendEmail(param, alertInfo);
+                    param.put("mon_count", monCnt);
+                    streamingService.addStreaming(param);
+                } else { // 수정
+                    if (s.equalsIgnoreCase("RECOVERY") || s.equalsIgnoreCase("OK")) { // 정상
+                        param.put("mon_level", "OK");
+                        param.put("mon_count", monCnt);
+                        streamingService.updateStreaming(param);
+                    } else { // 에러
+                        monCnt = (Long) chkInfo.get("mon_count");
+                        monCnt += 1;
+                        if (monCnt == 1) {
+                            param.put("mon_level", "Warning");
+                        } else if (monCnt == 2) {
+                            param.put("mon_level", "Error");
+                        } else {
+                            param.put("mon_level", "Critical");
                         }
 
-                        // telegram alert
-                        alertService.sendTelegram(param, "message");
-                        if(!param.get("status").toString().equalsIgnoreCase("DEAD")) {
-                            alertService.sendTelegram(param, "file");
+                        param.put("mon_count", monCnt);
+                        streamingService.updateStreaming(param);
+
+                        // sms, email alert
+                        Map<String, Object> alertInfo = alertService.getStreamingAlert(param);
+                        // 점검이 아닐경우
+                        if(alertInfo != null && chkInfo.get("checked_yn").toString().equals("N")) {
+                            // alert 주기
+                            if (monCnt <= (int)alertInfo.get("alert_start")
+                                    || (monCnt % (int)alertInfo.get("alert_interval")) == 0) {
+                                // sms alert 값 없으면 안 보내는 케이스 있음
+                                if(!alertInfo.get("sms_url").toString().equals("")) {
+                                    alertService.sendSMS(param, alertInfo);
+                                }
+                                // email notice
+                                alertService.sendEmail(param, alertInfo);
+                            }
+
+                            // telegram alert
+                            alertService.sendTelegram(param, "message");
+                            if(!param.get("status").toString().equalsIgnoreCase("DEAD")) {
+                                alertService.sendTelegram(param, "file");
+                            }
                         }
                     }
                 }

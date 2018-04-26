@@ -5,6 +5,7 @@
     <insert id="addStreaming" parameterType="hashMap">
         INSERT INTO t_stream_mon (
             telco_gubun,
+            customer,
             service,
             host_name,
             server_type,
@@ -17,6 +18,7 @@
             upd_user_id
         ) VALUES (
             #{telco},
+            #{customer},
             #{service},
             #{host_name},
             #{server_type},
@@ -33,6 +35,7 @@
     <insert id="addStreamingHis" parameterType="hashMap">
         INSERT INTO t_stream_mon_his (
             telco_gubun,
+            customer,
             service,
             host_name,
             server_type,
@@ -43,6 +46,7 @@
             upd_user_id
         ) VALUES (
             #{telco},
+            #{customer},
             #{service},
             #{host_name},
             #{server_type},
@@ -59,9 +63,6 @@
           mon_status = #{status},
           mon_level = #{mon_level},
           mon_count = #{mon_count}
-          <if test="status == 'RECOVERY'">
-              , deleted_yn = 'Y'
-          </if>
         WHERE deleted_yn = 'N'
             AND telco_gubun = #{telco}
             AND service = #{service}
@@ -81,6 +82,7 @@
             AND server_type = #{server_type}
             AND volume = #{vol}
             AND stream_name = #{stream_name}
+            AND mon_status not in ('OK', 'RECOVERY')
     </select>
 
     <select id="getStreamingList" resultType="hashMap">
