@@ -2,6 +2,7 @@ package com.solbox.api.controller;
 
 import com.solbox.api.service.AlertService;
 import com.solbox.api.service.StreamingService;
+import com.solbox.api.service.SvcInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ public class StreamingController {
     private static Logger log = LoggerFactory.getLogger(StreamingController.class);
     @Autowired private StreamingService streamingService;
     @Autowired private AlertService alertService;
+    @Autowired private SvcInfoService svcInfoService;
 
     @RequestMapping(value = "/api/streaming/add", method = RequestMethod.POST)
     public ResponseEntity<?> addStreaming(@RequestBody Map<String, Object> param) {
@@ -32,6 +34,13 @@ public class StreamingController {
             if (param.get("status") != null) {
                 Map<String, Object> chkInfo = streamingService.getCheckStreaming(param);
                 String s = (String) param.get("status");
+
+                // 고객정보 가져오기
+                String customName = svcInfoService.getCustomer(param);
+                if (customName == null) {
+                    customName = "";
+                }
+                param.put("customer", customName);
 
                 if (chkInfo == null) { // 생성
                     if (s.equalsIgnoreCase("RECOVERY") || s.equalsIgnoreCase("OK")) { // 정상
