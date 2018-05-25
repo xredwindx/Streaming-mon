@@ -73,7 +73,7 @@
     </update>
 
     <select id="getCheckStreaming" resultType="hashMap">
-        SELECT mon_level, mon_count, checked_yn
+        SELECT mon_level, mon_count, checked_yn, mon_status
         FROM t_stream_mon
         WHERE deleted_yn = 'N'
             AND telco_gubun = #{telco}

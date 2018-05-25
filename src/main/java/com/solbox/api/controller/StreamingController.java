@@ -53,7 +53,11 @@ public class StreamingController {
                     param.put("mon_count", monCnt);
                     streamingService.addStreaming(param);
                 } else { // 수정
-                    if (s.equalsIgnoreCase("RECOVERY") || s.equalsIgnoreCase("OK")) { // 정상
+                    // OK가 너무 많은 관계로 OK-OK인 경우 처리안함
+                    String chkInfoStatus = (String) chkInfo.get("mon_status");
+                    if (s.equalsIgnoreCase("OK") && chkInfoStatus.equalsIgnoreCase("OK")) {
+                        return new ResponseEntity<>(returnStr, apiStatus);
+                    } else if (s.equalsIgnoreCase("RECOVERY") || s.equalsIgnoreCase("OK")) { // 정상
                         param.put("mon_level", "OK");
                         param.put("mon_count", monCnt);
                         streamingService.updateStreaming(param);
@@ -95,8 +99,10 @@ public class StreamingController {
                     }
                 }
 
-                // history
-                streamingService.addStreamingHis(param);
+                // history - ok가 너무 많이 와서 처리 안 함
+                if (!s.equalsIgnoreCase("OK")) {
+                    streamingService.addStreamingHis(param);
+                }
             }
         } catch(Exception e) {
             log.error(e.getMessage(), e);
