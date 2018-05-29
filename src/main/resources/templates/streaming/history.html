@@ -94,8 +94,6 @@
         }
 
         $scope.getStreamingHistoryList = function () {
-            console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-            console.log($scope.page);
             $scope.pgOffset = ($scope.page.currentPage - 1) * $scope.page.pageSize;
             $http({
                 method: "POST",
