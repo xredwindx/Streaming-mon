@@ -26,3 +26,6 @@ nbdist/
 
 ### 보안 ###
 out
+
+src/main/resources/application-local.properties
+src/main/resources/application-prod.properties
