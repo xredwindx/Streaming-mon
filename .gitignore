@@ -15,6 +15,7 @@
 *.iws
 *.iml
 *.ipr
+/out/
 
 ### NetBeans ###
 nbproject/private/
@@ -25,7 +26,5 @@ nbdist/
 .nb-gradle/
 
 ### 보안 ###
-out
-
-src/main/resources/application-local.properties
-src/main/resources/application-prod.properties
+/src/main/resources/application-local.properties
+/src/main/resources/application-prod.properties

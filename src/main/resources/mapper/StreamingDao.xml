@@ -63,6 +63,9 @@
           mon_status = #{status},
           mon_level = #{mon_level},
           mon_count = #{mon_count}
+          <if test="mon_level == 'OK'">
+            , checked_yn = 'N'
+          </if>
         WHERE deleted_yn = 'N'
             AND telco_gubun = #{telco}
             AND service = #{service}
